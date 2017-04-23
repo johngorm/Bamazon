@@ -1,0 +1,16 @@
+{
+  "name": "bamazon-customer",
+  "version": "1.0.0",
+  "description": "Display the contents of a MySQL server and allows user to select a item and the quantity they wish to purchase",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Gorman",
+  "license": "ISC",
+  "dependencies": {
+    "console.table": "^0.8.0",
+    "inquirer": "^3.0.6",
+    "mysql": "^2.13.0"
+  }
+}
