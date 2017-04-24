@@ -24,13 +24,14 @@ function processUserInput(input) {
 			else if(purchase_quantity <= res[0].stock_quantity){
 				console.log(`You have purchased ${purchase_quantity} ${product}(s).\nTotal cost: $${res[0].price * purchase_quantity}`);
 				let new_stock_quantity = res[0].stock_quantity - purchase_quantity;
-				// updateInventoryListing();
-				process.exit();
+				updateDBStock(product, new_stock_quantity);
+				
 			}
 			else{
 				console.error('\n\nWe do not have enough stock to meet your request. Sorry');
-				displayMainMenu();
+				
 			}
+			displayMainMenu();
 		});		
 	}
 	else{
@@ -38,6 +39,14 @@ function processUserInput(input) {
 		displayMainMenu();
 	}
 };
+
+function updateDBStock(item, new_stock){
+	connection.query('UPDATE products SET stock_quantity = ? WHERE product_name = ?', [new_stock,item], (err,res) =>{
+		if(err){
+			throw err;
+		}
+	});
+}
 
 connection.connect( (err,res) => {
 	if(err){
