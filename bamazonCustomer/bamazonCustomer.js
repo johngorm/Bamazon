@@ -21,11 +21,15 @@ function processUserInput(input) {
 			if(err){
 				throw err;
 			}
-			else{
-				console.log(`You have purchased ${purchase_quantity} ${product}(s).\nTotal cost: ${res[0].price * purchase_quantity}`);
+			else if(purchase_quantity <= res[0].stock_quantity){
+				console.log(`You have purchased ${purchase_quantity} ${product}(s).\nTotal cost: $${res[0].price * purchase_quantity}`);
 				let new_stock_quantity = res[0].stock_quantity - purchase_quantity;
 				// updateInventoryListing();
 				process.exit();
+			}
+			else{
+				console.error('\n\nWe do not have enough stock to meet your request. Sorry');
+				displayMainMenu();
 			}
 		});		
 	}
