@@ -48,11 +48,7 @@ function updateDBStock(item, new_stock){
 	});
 }
 
-connection.connect( (err,res) => {
-	if(err){
-		throw err;
-	}
-});
+
 
 function displayMainMenu() {
 
@@ -86,5 +82,11 @@ function displayMainMenu() {
 		}
 	});
 };
+
+connection.connect( (err,res) => {
+	if(err){
+		throw err;
+	}
+});
 
 displayMainMenu();
