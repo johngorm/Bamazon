@@ -26,6 +26,19 @@ function displayDBProducts(){
 		displayMenuOptions();
 	});
 
+};
+
+function displayLowInventory(){
+	connection.query('SELECT * from products WHERE stock_quantity < 5', (err, res) =>{
+		if(err){
+			throw err;
+		}
+		else{
+			console.table(res);
+		}
+		displayMenuOptions();
+	});
+
 }
 
 
