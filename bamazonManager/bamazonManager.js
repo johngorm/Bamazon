@@ -39,6 +39,46 @@ function displayLowInventory(){
 		displayMenuOptions();
 	});
 
+};
+
+function addNewProduct(){
+	inquirer.prompt([
+	{
+		name: 'name',
+		type: 'input',
+		message: 'Enter the name of the product'
+	}, {
+		name: 'department',
+		type: 'input',
+		message: 'Enter the department in which the product belongs'
+	},{
+		name: 'price',
+		type: 'input',
+		message: 'Enter the price of the product'
+	},{
+		name: 'stock',
+		type: 'input',
+		message: 'Enter the amount of item in stock'
+	}
+	]).then(function(newItem){
+		let price = parseFloat(newItem.price);
+		let stock = parseInt(newItem.stock);
+		if(!isNaN(price) && !isNaN(stock)){
+			connection.query('INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?,?,?,?)', 
+				[newItem.name,newItem.department, newItem.price, newItem.stock],
+				(err,res) =>{
+					if(err){
+						throw err;
+					}
+					displayMenuOptions();
+			});
+		}
+		else{
+			console.error('Invalid format for price and/or stock. Product not added to database');
+			displayMenuOptions();
+		}
+
+	});
 }
 
 
