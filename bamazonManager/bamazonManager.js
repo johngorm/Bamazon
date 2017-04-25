@@ -1,5 +1,5 @@
-var mysql = require('mysql');
-var inquirer = require('inquirer');
+const mysql = require('mysql');
+const inquirer = require('inquirer');
 require('console.table');
 
 const connection = mysql.createConnection({
@@ -17,12 +17,12 @@ function displayDBProducts(){
 		if(err){
 			throw err;
 		}
-		let recordArray = [];
+		let record_array = [];
 		for(let record in res){
-			recordArray.push(res[record]);
+			record_array.push(res[record]);
 		}
 		console.log('\n');
-		console.table(recordArray);
+		console.table(record_array);
 		displayMenuOptions();
 	});
 
@@ -39,6 +39,71 @@ function displayLowInventory(){
 		displayMenuOptions();
 	});
 
+};
+
+function addToInventory(){
+	connection.query('SELECT product_name, stock_quantity FROM products', (err,res) =>{
+		if(err){
+			throw err;
+		}
+	
+		let products = [];
+		let quantity = []
+		for(let record in res){
+			products.push(res[record].product_name);
+			quantity.push(res[record].stock_quantity);
+		}
+		inquirer.prompt([
+		{
+			name: 'selected_item',
+			type: 'list',
+			message: 'Select product you wish to increase stock',
+			choices: products
+		}, {
+			name: 'increment_value',
+			type: 'input',
+			message: 'How much of the product do you wish to add to inventory?',
+
+		}
+		]).then(function (userInput){
+			let increment_num = parseInt(userInput.increment_value);
+			let stock_index;
+			try{
+				if(!increment_num){
+					throw "Not an number"
+				} 					
+				if(increment_num < 0) {
+					throw "Number is negative"
+				}
+			}	
+			catch(err){
+				console.error(err);
+				displayMenuOptions();
+			}
+			
+			for(var ii = 0; ii < products.length; ii++){
+				if(products[ii] === userInput.selected_item){
+					stock_index = ii; 
+					break;
+				}	
+			}
+			incrementProductStock(userInput.selected_item, increment_num, quantity[stock_index]);
+		});
+	
+	});
+	
+};
+
+
+function incrementProductStock(product, increment_amt, prev_stock){
+	let new_stock = prev_stock + increment_amt;
+	connection.query('UPDATE products SET stock_quantity = ? WHERE product_name = ?',[new_stock, product], (err,res) =>{
+		if(err){
+			throw err;
+		}
+		displayMenuOptions();
+
+	});
 };
 
 function addNewProduct(){
@@ -65,7 +130,7 @@ function addNewProduct(){
 		let stock = parseInt(newItem.stock);
 		if(!isNaN(price) && !isNaN(stock)){
 			connection.query('INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?,?,?,?)', 
-				[newItem.name,newItem.department, newItem.price, newItem.stock],
+				[newItem.name,newItem.department, price.toFixed(2), stock],
 				(err,res) =>{
 					if(err){
 						throw err;
@@ -109,7 +174,7 @@ function displayMenuOptions(){
 			connection.end();
 			process.exit();
 		}
-	})
+	});
 };
 
 displayMenuOptions();
