@@ -22,8 +22,10 @@ function processUserInput(input) {
 				throw err;
 			}
 			else if(purchase_quantity <= res[0].stock_quantity){
-				console.log(`You have purchased ${purchase_quantity} ${product}(s).\nTotal cost: $${res[0].price * purchase_quantity}`);
+				let total_cost = (res[0].price * purchase_quantity).toFixed(2);
 				let new_stock_quantity = res[0].stock_quantity - purchase_quantity;
+				console.log(`\nYou have purchased ${purchase_quantity} ${product}(s).\nTotal cost: $${total_cost}`);
+				
 				updateDBStock(product, new_stock_quantity);
 				
 			}
@@ -46,9 +48,7 @@ function updateDBStock(item, new_stock){
 			throw err;
 		}
 	});
-}
-
-
+};
 
 function displayMainMenu() {
 
