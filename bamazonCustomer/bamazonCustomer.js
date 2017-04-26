@@ -30,7 +30,7 @@ function processUserInput(input) {
 	}
 	else{
 		console.error('Quantity input is not valid. Please enter a positive whole number');
-		displayMainMenu();
+		displayProducts();
 	}
 };
 
@@ -52,7 +52,7 @@ function displayProducts(){
 			var products = []
 			for(let record in response){
 				products.push(response[record].product_name);
-				productsRecord.push([response[record].item_id, response[record].product_name, response[record].price]);
+				productsRecord.push([response[record].item_id, response[record].product_name, '$' + response[record].price.toFixed(2)]);
 			}
 			console.table(['ID', 'Product', 'Cost'], productsRecord);
 			inquirer.prompt([
