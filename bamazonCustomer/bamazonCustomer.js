@@ -42,8 +42,7 @@ function updateDBStock(item, new_stock){
 	});
 };
 
-function displayMainMenu() {
-
+function displayProducts(){
 	connection.query('SELECT * FROM products', (err,response) => {
 		if(err){
 			throw err;
@@ -74,6 +73,25 @@ function displayMainMenu() {
 		}
 	});
 };
+
+function displayMainMenu() {
+	inquirer.prompt([
+	{
+		name: 'shop',
+		message: 'Welcome to Bamazon! To begin shopping, type "Y". (Type "n" to leave store)',
+		type: 'confirm'
+	}
+	]).then(function(userInput){
+		if(userInput.shop){
+			displayProducts();
+		}
+		else{
+			connection.end();
+			process.exit();
+		}
+	});
+}
+
 
 connection.connect( (err,res) => {
 	if(err){
