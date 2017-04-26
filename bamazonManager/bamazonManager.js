@@ -1,16 +1,9 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const config = require('./config.js').config;
 require('console.table');
 
-const connection = mysql.createConnection({
-	host : 'localhost',
-	port: 3306,
-
-	user: 'root',
-
-	password: '',
-	database: 'Bamazon'
-});
+const connection = mysql.createConnection(config);
 
 function displayDBProducts(){
 	connection.query('SELECT * FROM products', (err, res) => {
