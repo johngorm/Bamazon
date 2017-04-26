@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 var inquirer = require('inquirer');
 require('console.table'); 
-var config = require('./config.js').config;
+var config = require('./config.js');
 var connection = mysql.createConnection(config);
 
 function processUserInput(input) {

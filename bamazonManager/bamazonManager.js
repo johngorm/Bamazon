@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
-const config = require('./config.js').config;
+const config = require('./config.js');
 require('console.table');
 
 const connection = mysql.createConnection(config);
