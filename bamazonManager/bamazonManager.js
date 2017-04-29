@@ -40,10 +40,10 @@ function addToInventory(){
 			throw err;
 		}
 	
-		let products = [];
-		let quantity = []
+		let product_names = [];
+		let quantity = [];
 		for(let record in res){
-			products.push(res[record].product_name);
+			product_names.push(res[record].product_name);
 			quantity.push(res[record].stock_quantity);
 		}
 		inquirer.prompt([
@@ -51,7 +51,7 @@ function addToInventory(){
 			name: 'selected_item',
 			type: 'list',
 			message: 'Select product you wish to increase stock',
-			choices: products
+			choices: product_names
 		}, {
 			name: 'increment_value',
 			type: 'input',
@@ -74,8 +74,8 @@ function addToInventory(){
 				displayMenuOptions();
 			}
 			
-			for(var ii = 0; ii < products.length; ii++){
-				if(products[ii] === userInput.selected_item){
+			for(var ii = 0; ii < product_names.length; ii++){
+				if(product_names[ii] === userInput.selected_item){
 					stock_index = ii; 
 					break;
 				}	
@@ -146,7 +146,7 @@ function displayMenuOptions(){
 	{
 		name: 'manager_option',
 		type: 'rawlist',
-		message: 'Select your desired action.',
+		message: 'Manager View: Select your desired action.',
 		choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product', 'QUIT']
 	}
 	]).then(function(response) {
