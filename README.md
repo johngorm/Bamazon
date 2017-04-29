@@ -27,11 +27,13 @@ module.exports = {
 ```
 Fill in the fields with your personal database options. Paste a copy of `config.js` in each *bamazon* directory.
 
-All console inputs are handled using the `inquirer` node package
+All console inputs are handled using the `inquirer` node package and all databases are displayed with `console.table` package.
 
 ## Bamazon Customer
 
 `node bamazonCustomer.js`
+
+![customer_view](./bamazon_Customer.png)
 
 This program will allow you select and purchase items in the database. You select from the list of items and the provide the amount
 you wish you buy.  If you request more than the current stock of an item, the transaction will not go through.
@@ -39,13 +41,13 @@ you wish you buy.  If you request more than the current stock of an item, the tr
 ## Bamazon Manager
 
 `node bamazonManager.js`
-
+![manager_view](./bamazon_Manager.png)
 This program enables management of the database from the console. Users have the following options once the code begins execution: 
 
 * View Database - Display all the items in the shop
 * View Low Inventory - Display all items whose stock quantity is less than 5
 * Add to Inventory - Increase the amount of an item in stock
-* Add New Product - Add a new product to the database
+* Add New Product - Add a new product to the database (User provides name, department, price and amount in stock)
 * QUIT - Exit program
 
 
