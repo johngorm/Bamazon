@@ -37,6 +37,7 @@ All console inputs are handled using the `inquirer` node package and all databas
 
 This program will allow you select and purchase items in the database. You select from the list of items and the provide the amount
 you wish you buy.  If you request more than the current stock of an item, the transaction will not go through.
+
 ---
 ## Bamazon Manager
 
